@@ -1,6 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const authRoutes = require ("./routes/auth").router;
+const bookRoutes = require("./routes/bookRoutes");
+
 
 const app = express();
 app.use(express.json());
@@ -54,13 +57,15 @@ app.delete("/books/:id", async (req, res) => {
   res.json({ message: "Book deleted" });
 });
 
-
-app.listen(3000, () => {
-  console.log("Server running at http://localhost:3000");
-});
-
 app.get("/",(req,res)=>{
     res.send("Library API is running")
 });
 app.use(express.json());
 app.use("/api/books", require("./routes/auth"));
+app.use("/api/auth",authRoutes);
+app.use("/api/booka,"bookRoutes);
+
+app.listen(3000, () => {
+  console.log("Server running at http://localhost:3000");
+});
+
